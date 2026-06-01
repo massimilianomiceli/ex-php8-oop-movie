@@ -1,5 +1,24 @@
 <?php
 
+trait Rating
+{
+    public $rating;
+
+    public function setRating($newRating)
+    {
+        if ($newRating > 0 && $newRating <= 10) {
+            $this -> rating = $newRating;
+        } else {
+            echo "Please enter a rating from 1 to 10";
+        }
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+}
+
 class Genre
 {
     public $name;
@@ -15,6 +34,7 @@ class Genre
 
 class Movie
 {
+    use Rating;
     public $title;
     public $year;
     public $director;
@@ -39,7 +59,7 @@ class Movie
         }
 
         //implode restituisce una stringa contenente tutti gli elementi di un array nel medesimo ordine, inserendo il parametro glue tra un elemento e l'altro.
-        return $this->title . " was released in " . $this->year . ", directed by " . $this->director . ", and has a duration of " . $this->duration . " minutes. " . "<br>" . "Genres: " . implode(", ", $genresList);
+        return $this->title . " was released in " . $this->year . ", directed by " . $this->director . ", and has a duration of " . $this->duration . " minutes. " . "<br>" . "Genres: " . implode(", ", $genresList) . "<br>" . "Rating: " . $this->rating;
     }
 }
 $GenreSciFi = new Genre("Sci-Fi", "A genre that combines scientific or futuristic elements with a tense story full of mystery, suspense, and plot twists");
@@ -49,6 +69,10 @@ $Interstellar = new Movie("Interstellar", 2014, "Christopher Nolan", 169, [$Genr
 
 var_dump($Inception);
 var_dump($Interstellar);
+
+$Inception->setRating(1);
+$Interstellar->setRating(8);
+
 
 echo $Inception -> getMovie();
 echo "<br>";
